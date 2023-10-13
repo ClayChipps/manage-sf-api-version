@@ -1,7 +1,10 @@
 import * as core from '@actions/core'
 import * as glob from '@actions/glob'
 import {promises as fs} from 'fs'
+import { doc } from 'prettier'
 import * as xml2js from 'xml2js'
+import * as xmldoc from 'xmldoc'
+import * as cheerio from 'cheerio'
 
 /**
  * The main function for the action.
@@ -34,19 +37,15 @@ export async function run(): Promise<void> {
 
       const fileData = await fs.readFile(metadataXmlFile)
 
-      const xmlJson = await xml2js.parseStringPromise(fileData)
+      const $ = cheerio.load(fileData, {
+        xmlMode: true
+      });
 
-      if (xmlJson.ApexClass) {
-        xmlJson.ApexClass.apiVersion = `${apiVersion}.0`
-      } else if (xmlJson.LightningComponentBundle) {
-        xmlJson.LightningComponentBundle.apiVersion = `${apiVersion}.0`
-      } else if (xmlJson.AuraDefinitionBundle) {
-        xmlJson.AuraDefinitionBundle.apiVersion = `${apiVersion}.0`
-      }
+      $('apiVersion').text(`${apiVersion}.0`);  
 
       await fs.writeFile(
         metadataXmlFile,
-        new xml2js.Builder().buildObject(xmlJson)
+        $.xml()
       )
     }
   } catch (error) {
