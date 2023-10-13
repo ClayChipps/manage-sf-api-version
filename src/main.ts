@@ -1,9 +1,6 @@
 import * as core from '@actions/core'
 import * as glob from '@actions/glob'
 import {promises as fs} from 'fs'
-import { doc } from 'prettier'
-import * as xml2js from 'xml2js'
-import * as xmldoc from 'xmldoc'
 import * as cheerio from 'cheerio'
 
 /**
@@ -39,14 +36,11 @@ export async function run(): Promise<void> {
 
       const $ = cheerio.load(fileData, {
         xmlMode: true
-      });
+      })
 
-      $('apiVersion').text(`${apiVersion}.0`);  
+      $('apiVersion').text(`${apiVersion}.0`)
 
-      await fs.writeFile(
-        metadataXmlFile,
-        $.xml()
-      )
+      await fs.writeFile(metadataXmlFile, $.xml())
     }
   } catch (error) {
     if (error instanceof Error) {
