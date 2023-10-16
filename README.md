@@ -1,6 +1,6 @@
 # Manage SF API Version
 
-<a href="https://github.com/ctchipps/upgrade-sfdx-api-version/actions"><img alt="typescript-action status" src="https://github.com/ctchipps/manage-sf-api-version/workflows/build-test/badge.svg"></a>
+<a href="https://github.com/ctchipps/manage-sf-api-version/actions"><img alt="typescript-action status" src="https://github.com/ctchipps/manage-sf-api-version/workflows/build-test/badge.svg"></a>
 
 A GitHub action that will automatically find all API version references in a given Salesforce project directory, and upgrade those API version references to the provided API version.
 
@@ -33,7 +33,7 @@ jobs:
           commit-message: 'chore: bump api to v${{inputs.api-version}}.0'
 ```
 
-You can also pin to a [specific release](https://github.com/ctchipps/upgrade-sfdx-api-version/releases) version in the format `@v1.x.x`
+You can also pin to a [specific release](https://github.com/ClayChipps/manage-sf-api-version/releases) version in the format `@v1.x.x`
 
 ### Action Inputs
 
